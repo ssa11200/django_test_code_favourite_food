@@ -1,0 +1,28 @@
+{% extends 'base.html' %} {% block content %}
+
+<h1>User Dashboard</h1>
+
+{% if user.is_authenticated %}
+
+<p>Name: {{ user.first_name }} {{ user.last_name }}</p>
+<p>Username: {{ user.username}}</p>
+<p>Email: {{ user.email }}</p>
+
+<div style="margin: auto; width: 350px">
+  <h3>Forms to complete: {{ forms|length }}</h3>
+  {% for form in forms %}
+  <br />
+  <form
+    enctype="multipart/form-data"
+    action="{% url 'complete_forms' form.assigned_form_id.value %}"
+    method="POST"
+  >
+    {% csrf_token %} {{ form.as_p }}
+    <input type="submit" value="Submit" class="btn btn-secondary" />
+  </form>
+  <br />
+  {% endfor %}
+</div>
+<br /><br />
+
+{% endif %} {% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'base.html' %} {% block content %}
+
+<h1>List of Foods</h1>
+
+{% if user.is_authenticated %} {% block css_style %}
+<style>
+  table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  td,
+  th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+</style>
+{% endblock %}
+
+<div>
+  {% for food in foods %}
+  <hr />
+  <p>{{ forloop.counter }}:</p>
+  <img
+    style="width: 100%; max-width: 100px; max-height: 100px"
+    src="{{ food.photo.url }}"
+  />
+  <p>Name: {{food.name}}</p>
+  <p>Email: {{food.email}}</p>
+  <p>Phone:{{food.telephone}}</p>
+  <p>Date of Birth: {{food.dob}}</p>
+  <p>Favarioute Food: {{food.food}}</p>
+  <hr />
+  {% endfor %}
+</div>
+
+{% endif %} {% endblock %}

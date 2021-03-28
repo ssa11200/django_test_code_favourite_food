@@ -1,0 +1,49 @@
+{% extends 'base.html' %} {% block content %}
+
+<h1>List of Users</h1>
+
+{% if user.is_authenticated %} {% if user.is_superuser %} {% block css_style %}
+<style>
+  table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  td,
+  th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+</style>
+{% endblock %}
+
+<div>
+  <table>
+    <tr>
+      <th>Username</th>
+      <th>Email</th>
+      <th>Assign Forms</th>
+    </tr>
+    {% for user in user_instances %}
+    <tr>
+      <th>{{ user.username }}</th>
+      <th>{{ user.email }}</th>
+      <th>
+        <form action="{% url 'assign_forms' user.pk %}" method="POST">
+          {% csrf_token %}
+          <input
+            type="submit"
+            class="submit_btn btn"
+            value="Assign"
+            style="width: 100%"
+          />
+        </form>
+      </th>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+
+{% endif %} {% endif %} {% endblock %}
