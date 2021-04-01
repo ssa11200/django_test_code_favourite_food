@@ -395,7 +395,6 @@ class TestCompleteFormView(TestCase):
             file_name="test.jpg",
         )
 
-        # another request is made to complete the same form
         response = self.client.post(
             self.url(str(assigned_food_form.pk)), data=values, follow=True
         )
@@ -416,7 +415,6 @@ class TestCompleteFormView(TestCase):
             file_name="test.jpg",
         )
 
-        # another request is made to complete the same form
         response = self.client.post(
             self.url(str(assigned_food_form.pk)), data=values, follow=True
         )
@@ -480,6 +478,7 @@ class TestHistoryView(TestCase):
         self.assertEqual(response.templates[0].name, "history.html")
         self.assertEqual(response.templates[1].name, "base.html")
 
+    # test the history for user 1
     def test_user_history(self):
         self.client.login(username="user1", password="password")
         form1 = create_completed_food_form(self.user1)
@@ -487,4 +486,9 @@ class TestHistoryView(TestCase):
         response = self.client.get(self.url, follow=True)
         self.assertEqual(response.status_code, 200)
         foods = response.context["foods"]
+        # user 1 can only see 1 record in the history
         self.assertEqual(len(foods), 1)
+
+        self.assertEqual(len(response.templates), 2)
+        self.assertEqual(response.templates[0].name, "history.html")
+        self.assertEqual(response.templates[1].name, "base.html")

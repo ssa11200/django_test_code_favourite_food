@@ -2,22 +2,7 @@
 
 <h1>List of Foods</h1>
 
-{% if user.is_authenticated %} {% block css_style %}
-<style>
-  table {
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
-  }
-
-  td,
-  th {
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 8px;
-  }
-</style>
-{% endblock %}
+{% if user.is_authenticated %}
 
 <div>
   {% for food in foods %}
